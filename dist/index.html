@@ -3,59 +3,68 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <meta name="theme-color" content="#0d1426" />
-  <meta name="description" content="A step-by-step photo guide for documenting a vehicle's condition." />
-  <title>Car Inspection Guide</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230d1426'/%3E%3Cpath d='M14 37l5-14h26l5 14v11h-6v-5H20v5h-6V37zm8-9l-3 9h26l-3-9H22z' fill='%2328a5ff'/%3E%3Ccircle cx='22' cy='39' r='3' fill='white'/%3E%3Ccircle cx='42' cy='39' r='3' fill='white'/%3E%3C/svg%3E" />
-  <link rel="stylesheet" href="styles.css?v=4" />
+  <meta name="theme-color" content="#f7f8fa" />
+  <meta name="description" content="A rental vehicle photo inspection and damage record." />
+  <title>Rental Car Condition Report</title>
+  <link rel="stylesheet" href="styles.css?v=5" />
 </head>
 <body>
   <main class="app-shell">
     <header class="topbar">
       <button class="icon-button" id="backBtn" aria-label="Go back">←</button>
-      <div>
-        <p class="eyebrow">PHOTO CHECKLIST</p>
-        <h1>Car inspection guide</h1>
-      </div>
-      <div class="progress-ring" id="progressRing" aria-label="Inspection progress"><span id="progressText">0%</span></div>
+      <div><p class="eyebrow">RENTAL EVIDENCE</p><h1>Vehicle condition</h1></div>
+      <button class="progress-button" id="progressButton" aria-label="View inspection progress"><strong id="progressText">0%</strong><span>saved</span></button>
     </header>
-
-    <section id="overview" class="overview" aria-label="Inspection overview">
-      <div class="intro">
-        <span class="step-pill">12 required photos</span>
-        <h2>Document every angle</h2>
-        <p>Follow the guide in order. Keep the whole car part in frame and use bright, even light.</p>
+    <section id="overview" class="overview">
+      <div class="hero">
+        <div><span class="live-dot"></span><span id="sessionDate">Inspection record</span></div>
+        <h2>Photograph it now.<br><em>Prove it later.</em></h2>
+        <p>Build a time-stamped record of the entire vehicle before you drive away or return it.</p>
       </div>
-      <div id="sectionList" class="section-list"></div>
+      <section class="vehicle-card" aria-labelledby="vehicleHeading">
+        <div class="section-title"><div><p class="eyebrow">RENTAL DETAILS</p><h3 id="vehicleHeading">Identify the vehicle</h3></div><span>Optional</span></div>
+        <div class="field-row">
+          <label>Rental company<input id="companyInput" autocomplete="organization" placeholder="e.g. Hertz" /></label>
+          <label>License plate<input id="plateInput" autocapitalize="characters" placeholder="ABC 123" /></label>
+        </div>
+      </section>
+      <section class="progress-card">
+        <div class="progress-copy"><div><strong id="savedCount">0 of 20</strong><span> photos saved</span></div><small id="progressHint">Start with the vehicle record</small></div>
+        <div class="progress-track"><i id="progressBar"></i></div>
+        <button class="continue-button" id="continueBtn">Start inspection <span>→</span></button>
+      </section>
+      <nav class="filters" id="filters" aria-label="Filter photo checklist"></nav>
+      <div id="checklist" class="checklist"></div>
+      <button id="reviewBtn" class="review-button">Review evidence <span>→</span></button>
     </section>
-
-    <section id="guide" class="guide hidden" aria-live="polite">
-      <div class="guide-media">
-        <img id="guideImage" alt="" />
-        <div class="image-shade"></div>
-        <span id="sectionBadge" class="section-badge"></span>
+    <section id="captureView" class="capture-view hidden" aria-live="polite">
+      <div class="capture-hero">
+        <img id="guideImage" alt="" /><div class="capture-gradient"></div>
+        <div class="capture-meta"><span id="sectionBadge"></span><strong id="stepCount"></strong></div>
+        <div class="photo-status" id="photoStatus">Photo needed</div>
       </div>
-      <div class="guide-body">
-        <div id="dots" class="dots" aria-hidden="true"></div>
-        <p id="stepCount" class="eyebrow"></p>
-        <h2 id="guideTitle"></h2>
-        <p id="guideCopy" class="guide-copy"></p>
-        <div class="capture-panel">
-          <button id="cameraBtn" class="camera-button" type="button">
-            <span class="camera-icon" aria-hidden="true">●</span>
-            <span id="cameraLabel">Take photo</span>
-          </button>
-          <input id="cameraInput" type="file" accept="image/*" capture="environment" hidden />
-          <button id="savePhotoBtn" class="save-button hidden" type="button">Save to iPhone Photos</button>
-          <p id="captureStatus">Opens the rear camera on your phone.</p>
+      <div class="capture-body">
+        <p class="eyebrow" id="captureEyebrow">EXTERIOR</p><h2 id="guideTitle"></h2><p id="guideCopy" class="guide-copy"></p>
+        <div class="tip"><span>✓</span><p id="guideTip"></p></div>
+        <button id="cameraBtn" class="camera-button" type="button"><span class="camera-glyph">●</span><span id="cameraLabel">Open camera</span></button>
+        <input id="cameraInput" type="file" accept="image/*" capture="environment" hidden />
+        <button id="savePhotoBtn" class="save-button hidden" type="button">Save to iPhone Photos</button>
+        <p id="captureStatus" class="capture-status">Uses your iPhone's rear camera.</p>
+        <div class="damage-panel">
+          <label class="damage-toggle"><span><strong>Damage visible?</strong><small>Mark scratches, dents or stains</small></span><input id="damageToggle" type="checkbox" /><i></i></label>
+          <label id="noteWrap" class="damage-note hidden">Damage note<textarea id="damageNote" rows="3" placeholder="e.g. 5 cm scratch above rear wheel"></textarea></label>
         </div>
-        <div class="guide-actions">
-          <button id="prevBtn" class="secondary">Previous</button>
-          <button id="nextBtn" class="primary">Next photo <span>→</span></button>
-        </div>
+        <div class="capture-actions"><button id="prevBtn">Previous</button><button id="nextBtn">Next angle <span>→</span></button></div>
       </div>
+    </section>
+    <section id="reviewView" class="review-view hidden">
+      <div class="review-head"><p class="eyebrow">EVIDENCE REVIEW</p><h2 id="reviewTitle">Inspection summary</h2><p id="reviewSubtitle"></p></div>
+      <div class="review-stats"><div><strong id="reviewSaved">0</strong><span>Saved</span></div><div><strong id="reviewMissing">20</strong><span>Missing</span></div><div><strong id="reviewDamage">0</strong><span>Damage notes</span></div></div>
+      <div id="reviewList" class="review-list"></div>
+      <div class="review-warning"><strong>Keep your evidence</strong><p>Confirm every photo appears in the iPhone Photos app. Keep the originals until the rental is fully closed.</p></div>
+      <button id="returnBtn" class="continue-button">Return to checklist</button>
     </section>
   </main>
-  <script src="app.js?v=4"></script>
+  <script src="app.js?v=5"></script>
 </body>
 </html>
