@@ -40,11 +40,14 @@
         <p id="stepCount" class="eyebrow"></p>
         <h2 id="guideTitle"></h2>
         <p id="guideCopy" class="guide-copy"></p>
-        <label class="complete-row">
-          <input type="checkbox" id="completeCheck" />
-          <span class="checkmark">✓</span>
-          <span>Photo captured</span>
-        </label>
+        <div class="capture-panel">
+          <button id="cameraBtn" class="camera-button" type="button">
+            <span class="camera-icon" aria-hidden="true">●</span>
+            <span id="cameraLabel">Take photo</span>
+          </button>
+          <input id="cameraInput" type="file" accept="image/*" capture="environment" hidden />
+          <p id="captureStatus">Opens the rear camera on your phone.</p>
+        </div>
         <div class="guide-actions">
           <button id="prevBtn" class="secondary">Previous</button>
           <button id="nextBtn" class="primary">Next photo <span>→</span></button>
