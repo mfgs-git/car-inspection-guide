@@ -13,3 +13,7 @@ Open `dist/index.html` in a browser, or serve the `dist` directory with any stat
 - Persistent completion status using local storage
 - Responsive desktop and mobile layout
 - Keyboard navigation and accessible labels
+
+## Live app
+
+After GitHub Pages deploys: https://mfgs-git.github.io/car-inspection-guide/
